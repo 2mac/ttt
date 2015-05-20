@@ -1,0 +1,62 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# automake
+build-aux/
+autom4te.cache
+.deps
+.libs
+m4/
+libtool
+src/.dirstamp
+Makefile.in
+aclocal.m4
+configure
+configure.lineno
+depcomp
+missing
+install-sh
+stamp-h1
+compile
+config.log
+config.status
+config.status.lineno
+config.guess
+config.sub
+config.h
+config.h.in
+config.h.in~
+mingw32-config.cache
+ltmain.sh
+
+# packaging
+pkg/
+*.tar.gz
+
+# Emacs
+\#*\#
+.\#*
+ttt

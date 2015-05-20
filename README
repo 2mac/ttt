@@ -1,0 +1,36 @@
+ttt
+===
+
+Simple arbitrary-size tic-tac-toe game.
+
+To Build
+--------
+
+You will need a standards-compliant C compiler and GNU Make. On Debian
+GNU/Linux and derivatives, you can install these with
+
+    # apt-get install gcc make
+
+After that, build with
+
+    $ make
+
+To Install
+----------
+
+If you want to install this program, just run
+
+    # make install
+
+Usage
+-----
+
+The board is labeled with coordinates of letters and numbers. When placing a
+move, write the letter and then the number. For example, to put your mark in
+the very first cell, type `a0` as your position.
+
+License
+-------
+
+ttt is free software. You are free to use, copy, modify, and redistribute it
+under the terms of the GNU Affero General Public License, version 3 only.
