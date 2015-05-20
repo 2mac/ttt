@@ -40,9 +40,7 @@ draw_board (void)
   printf ("\n\n\n  ");
 
   for (i = 0; i < BOARD_SIZE; ++i)
-    {
-      printf (" %c", (int) i + 'A');
-    }
+    printf (" %c", (int) i + 'A');
 
   putchar ('\n');
 
