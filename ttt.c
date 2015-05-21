@@ -33,9 +33,9 @@ struct move
 char (*board)[BOARD_SIZE];
 
 static int
-get_bump (void)
+get_bump (int s)
 {
-  int i = 1, s = BOARD_SIZE;
+  int i = 1;
 
   while (s > 10)
     {
@@ -49,11 +49,11 @@ get_bump (void)
 static void
 draw_board (void)
 {
-  int i, j;
+  int i, j, bump = get_bump (BOARD_SIZE);
 
   printf ("\n\n\n ");
 
-  for (i = 0; i < get_bump (); ++i)
+  for (i = 0; i < bump; ++i)
     putchar (' ');
 
   for (i = 0; i < BOARD_SIZE; ++i)
@@ -63,7 +63,13 @@ draw_board (void)
 
   for (i = 0; i < BOARD_SIZE; ++i)
     {
-      printf ("%d |", i);
+      printf ("%d", i);
+
+      int b = bump - get_bump (i+1);
+      for (j = 0; j < b; ++j)
+	putchar (' ');
+
+      printf (" |");
 
       for (j = 0; j < BOARD_SIZE; ++j)
 	printf ("%c|", board[i][j]);
