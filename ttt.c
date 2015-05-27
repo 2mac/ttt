@@ -113,6 +113,7 @@ get_move (char player)
   printf ("%c's move: ", player);
   scanf ("%c%hhu", &v, &m.h);
 
+  // discard extra input to prevent cheating
   while (getchar () != '\n')
     ;
 
