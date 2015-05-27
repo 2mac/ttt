@@ -3,12 +3,12 @@ EXECCFLAGS=-Wall -std=c11
 SOURCES=ttt.c
 prefix=/usr/local
 
-all: executable
+all: ttt
 
-executable:
+ttt:
 	$(CC) $(EXECCFLAGS) $(CFLAGS) -o $(EXEC) $(SOURCES)
 
-install: executable
+install: ttt
 	install -m755 $(EXEC) $(DESTDIR)$(prefix)/bin/$(EXEC)
 
 clean:
