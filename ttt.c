@@ -77,7 +77,7 @@ draw_board (void)
     putchar (' ');
 
   for (i = 0; i < BOARD_SIZE; ++i)
-    printf (" %c", (int) i + 'A');
+    printf (" %c", i + 'A');
 
   putchar ('\n');
 
@@ -116,7 +116,7 @@ get_move (char player)
   while (getchar () != '\n')
     ;
 
-  m.v = (char) toupper (v) - 'A';
+  m.v = toupper (v) - 'A';
 
   return m;
 }
@@ -243,7 +243,7 @@ main (void)
   if (!winner)
     puts ("No one wins. :(");
   else
-    printf ("%c wins!\n", (char) winner);
+    printf ("%c wins!\n", winner);
 
   return 0;
 }
