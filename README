@@ -9,7 +9,7 @@ To Build
 You will need a standards-compliant C compiler and GNU Make. On Debian
 GNU/Linux and derivatives, you can install these with
 
-    # apt-get install gcc make
+    # apt-get install build-essential
 
 After that, build with
 
