@@ -23,6 +23,9 @@
 #include <ctype.h>
 #include <stdint.h>
 
+/**
+ * @brief The square dimensions of the game board (best when >=1 and <=26).
+ */
 #define BOARD_SIZE 3
 
 /**
