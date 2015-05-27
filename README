@@ -3,11 +3,56 @@ ttt
 
 Simple arbitrary-size tic-tac-toe game.
 
+History
+-------
+
+ttt was designed and written in response to a challenge from a colleague who
+wrote a console tic-tac-toe game in C++. The code was (frankly) written
+sloppily, and the program's structure severely limited its
+modularity. Furthermore, it was dependent on external commands unique to
+Microsoft operating systems (such as `cls` to clear the console).
+
+I decided I would rewrite the game using clean C code, require no outside
+dependencies (besides the standard C library), and allow a board of variable
+size. I achieved a program with significant improvements in runtime efficiency
+(measured with controlled tests and inputs on one machine) which could be
+recompiled to use different board sizes.
+
+I'm very pleased with the result, and I now use this as a test program when
+developing on new systems.
+
+Usefulness
+----------
+
+This program makes for an advanced "hello world" program for aspiring hackers
+that want a good sample to study and change.
+
+The C code complies with GNU and C standards, and it can be compiled and run on
+any compliant system. It makes use of several standard library features and
+showcases their uses. Since the code is documented using a standard format,
+readers can understand a functions purpose before reading it, thus better
+understanding the code as a whole.
+
+I used GNU Make to automate compilation not because it is hard (I could easily
+have written the instructions in this README file) but as a "hello world" for
+Makefiles, since hackers will no doubt need build automation tools for their
+more significant software.
+
+Since the source is controlled using Git, I also provided a way for new hackers
+to practice using Git and learn the advantages to source control. It also
+allows them to easily submit their changes and improvements to me to benefit
+future hackers.
+
+Lastly, I included a license file which describes the core ideals of free
+(libre) software, which I find to be very important for both new and
+experienced computer users everywhere.
+
 To Build
 --------
 
-You will need a standards-compliant C compiler and GNU Make. On Debian
-GNU/Linux and derivatives, you can install these with
+You will need a standards-compliant C compiler, the standard C library with
+header files, and GNU Make. On Debian GNU/Linux and derivatives, you can
+install these with
 
     # apt-get install build-essential
 
@@ -37,6 +82,18 @@ time. When compiling, add `-DBOARD_SIZE=X` to the `CFLAGS` where `X` is the
 desired size. For example, to set the board size to 6, run
 
     $ make CFLAGS=-DBOARD_SIZE=6
+
+Hacking
+-------
+
+ttt uses the GNU coding style for C with a strict 79-column limit in the source
+code. All functions and fields outside of `main()` should be documented using
+Doxygen comment formatting, and all variable symbolic constants should be
+optionally definable using the `CFLAGS` field in the Makefile.
+
+Avoid depending on external libraries with your changes. You will need to
+discuss with me (David McMackins II) if you want new dependencies to be added
+to the main program.
 
 License
 -------
