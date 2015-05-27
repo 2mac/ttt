@@ -191,7 +191,7 @@ int
 main (void)
 {
   char turn = 'X', winner;
-  unsigned long long num_turns = 0;
+  unsigned long num_turns = 0;
 
   board = malloc (sizeof (char[BOARD_SIZE][BOARD_SIZE]));
   if (NULL == board)
