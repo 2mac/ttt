@@ -29,6 +29,15 @@ The board is labeled with coordinates of letters and numbers. When placing a
 move, write the letter and then the number. For example, to put your mark in
 the very first cell, type `a0` as your position.
 
+Custom Boards
+-------------
+
+To change the size of the game board, you must define `BOARD_SIZE` at compile
+time. When compiling, add `-DBOARD_SIZE=X` to the `CFLAGS` where `X` is the
+desired size. For example, to set the board size to 6, run
+
+    $ make CFLAGS=-DBOARD_SIZE=6
+
 License
 -------
 

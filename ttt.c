@@ -21,21 +21,38 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdint.h>
 
-#define BOARD_SIZE 3
+#ifndef BOARD_SIZE
+/**
+ * @brief The square dimensions of the game board (best when >=1 and <=26).
+ */
+# define BOARD_SIZE 3
+#endif
 
+/**
+ * @brief Data structure for move position.
+ */
 struct move
 {
-  unsigned int h;
-  unsigned int v;
+  uint8_t h; // horizontal position
+  uint8_t v; // vertical position
 };
 
+/**
+ * @brief Storage for the board state.
+ */
 char (*board)[BOARD_SIZE];
 
-static int
-get_bump (int s)
+/**
+ * @brief Calculates the number of spaces by which to bump the board.
+ * @param s The size of the board for which to bump.
+ * @return The bump size for the given board.
+ */
+static uint8_t
+get_bump (uint8_t s)
 {
-  int i = 1;
+  uint8_t i = 1;
 
   while (s > 10)
     {
@@ -46,10 +63,13 @@ get_bump (int s)
   return i;
 }
 
+/**
+ * @brief Draws the board on the screen with some white space above it.
+ */
 static void
 draw_board (void)
 {
-  int i, j, bump = get_bump (BOARD_SIZE);
+  uint8_t i, j, bump = get_bump (BOARD_SIZE);
 
   printf ("\n\n\n ");
 
@@ -65,7 +85,8 @@ draw_board (void)
     {
       printf ("%d", i);
 
-      int b = bump - get_bump (i+1);
+      // make sure board lines up on all rows
+      uint8_t b = bump - get_bump (i+1);
       for (j = 0; j < b; ++j)
 	putchar (' ');
 
@@ -78,6 +99,11 @@ draw_board (void)
     }
 }
 
+/**
+ * @brief Gets a player's desired move.
+ * @param player The player for which to obtain the move.
+ * @return Move data based on player input.
+ */
 static struct move
 get_move (char player)
 {
@@ -85,7 +111,7 @@ get_move (char player)
   char v;
 
   printf ("%c's move: ", player);
-  scanf ("%c%u", &v, &m.h);
+  scanf ("%c%hhu", &v, &m.h);
 
   while (getchar () != '\n')
     ;
@@ -95,11 +121,17 @@ get_move (char player)
   return m;
 }
 
+/**
+ * @brief Checks if a player has won.
+ * @param player The player for which to check win status.
+ * @return true if the player has BOARD_SIZE in a row.
+ */
 static bool
 is_winner (char player)
 {
-  int i, j;
+  int16_t i, j;
 
+  // check rows
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
@@ -110,6 +142,7 @@ is_winner (char player)
 	  return true;
       }
 
+  // check columns
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
@@ -120,6 +153,7 @@ is_winner (char player)
 	  return true;
       }
 
+  // check diagonal from top-left to bottom-right
   for (i = 0, j = 0; i < BOARD_SIZE && j < BOARD_SIZE; ++i, ++j)
     {
       if (board[i][j] != player)
@@ -129,6 +163,7 @@ is_winner (char player)
 	return true;
     }
 
+  // check diagonal from top-right to bottom-left
   for (i = 0, j = BOARD_SIZE-1; i < BOARD_SIZE && j >= 0; ++i, --j)
     {
       if (board[i][j] != player)
@@ -141,11 +176,15 @@ is_winner (char player)
   return false;
 }
 
-static int
+/**
+ * @brief Checks if the board is in a winning state.
+ * @return The player who wins or 0 if no winner.
+ */
+static char
 find_winner (void)
 {
   char players[] = {'X', 'O'};
-  unsigned int i;
+  uint8_t i;
 
   for (i = 0; i < 2; ++i)
     if (is_winner (players[i]))
@@ -157,8 +196,8 @@ find_winner (void)
 int
 main (void)
 {
-  char turn = 'X';
-  int winner, i, j, num_turns = 0;
+  char turn = 'X', winner;
+  uint16_t num_turns = 0;
 
   board = malloc (sizeof (char[BOARD_SIZE][BOARD_SIZE]));
   if (NULL == board)
@@ -167,6 +206,7 @@ main (void)
       return 1;
     }
 
+  uint8_t i, j;
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       board[i][j] = ' ';
