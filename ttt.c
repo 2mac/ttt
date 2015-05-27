@@ -87,9 +87,8 @@ get_move (char player)
   printf ("%c's move: ", player);
   scanf ("%c%u", &v, &m.h);
 
-  while (getchar () != '\n'){
-      ;
-  }
+  while (getchar () != '\n')
+    ;
 
   m.v = (char) toupper (v) - 'A';
 
