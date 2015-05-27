@@ -24,14 +24,25 @@
 
 #define BOARD_SIZE 3
 
+/**
+ * @brief Data structure for move position.
+ */
 struct move
 {
-  unsigned short h;
-  unsigned short v;
+  unsigned short h; // horizontal position
+  unsigned short v; // vertical position
 };
 
+/**
+ * @brief Storage for the board state.
+ */
 char (*board)[BOARD_SIZE];
 
+/**
+ * @brief Calculates the number of spaces by which to bump the board.
+ * @param s The size of the board for which to bump.
+ * @return The bump size for the given board.
+ */
 static short
 get_bump (int s)
 {
@@ -46,6 +57,9 @@ get_bump (int s)
   return i;
 }
 
+/**
+ * @brief Draws the board on the screen with some white space above it.
+ */
 static void
 draw_board (void)
 {
@@ -65,6 +79,7 @@ draw_board (void)
     {
       printf ("%d", i);
 
+      // make sure board lines up on all rows
       short b = bump - get_bump (i+1);
       for (j = 0; j < b; ++j)
 	putchar (' ');
@@ -78,6 +93,11 @@ draw_board (void)
     }
 }
 
+/**
+ * @brief Gets a player's desired move.
+ * @param player The player for which to obtain the move.
+ * @return Move data based on player input.
+ */
 static struct move
 get_move (char player)
 {
@@ -95,11 +115,17 @@ get_move (char player)
   return m;
 }
 
+/**
+ * @brief Checks if a player has won.
+ * @param player The player for which to check win status.
+ * @return true if the player has BOARD_SIZE in a row.
+ */
 static bool
 is_winner (char player)
 {
   short i, j;
 
+  // check rows
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
@@ -110,6 +136,7 @@ is_winner (char player)
 	  return true;
       }
 
+  // check columns
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
@@ -120,6 +147,7 @@ is_winner (char player)
 	  return true;
       }
 
+  // check diagonal from top-left to bottom-right
   for (i = 0, j = 0; i < BOARD_SIZE && j < BOARD_SIZE; ++i, ++j)
     {
       if (board[i][j] != player)
@@ -129,6 +157,7 @@ is_winner (char player)
 	return true;
     }
 
+  // check diagonal from top-right to bottom-left
   for (i = 0, j = BOARD_SIZE-1; i < BOARD_SIZE && j >= 0; ++i, --j)
     {
       if (board[i][j] != player)
@@ -141,6 +170,10 @@ is_winner (char player)
   return false;
 }
 
+/**
+ * @brief Checks if the board is in a winning state.
+ * @return The player who wins or 0 if no winner.
+ */
 static char
 find_winner (void)
 {
