@@ -21,6 +21,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdint.h>
 
 #define BOARD_SIZE 3
 
@@ -29,8 +30,8 @@
  */
 struct move
 {
-  unsigned short h; // horizontal position
-  unsigned short v; // vertical position
+  uint8_t h; // horizontal position
+  uint8_t v; // vertical position
 };
 
 /**
@@ -43,10 +44,10 @@ char (*board)[BOARD_SIZE];
  * @param s The size of the board for which to bump.
  * @return The bump size for the given board.
  */
-static short
-get_bump (int s)
+static uint8_t
+get_bump (uint8_t s)
 {
-  short i = 1;
+  uint8_t i = 1;
 
   while (s > 10)
     {
@@ -63,7 +64,7 @@ get_bump (int s)
 static void
 draw_board (void)
 {
-  short i, j, bump = get_bump (BOARD_SIZE);
+  uint8_t i, j, bump = get_bump (BOARD_SIZE);
 
   printf ("\n\n\n ");
 
@@ -80,7 +81,7 @@ draw_board (void)
       printf ("%d", i);
 
       // make sure board lines up on all rows
-      short b = bump - get_bump (i+1);
+      uint8_t b = bump - get_bump (i+1);
       for (j = 0; j < b; ++j)
 	putchar (' ');
 
@@ -105,7 +106,7 @@ get_move (char player)
   char v;
 
   printf ("%c's move: ", player);
-  scanf ("%c%hu", &v, &m.h);
+  scanf ("%c%hhu", &v, &m.h);
 
   while (getchar () != '\n')
     ;
@@ -123,7 +124,7 @@ get_move (char player)
 static bool
 is_winner (char player)
 {
-  short i, j;
+  int16_t i, j;
 
   // check rows
   for (i = 0; i < BOARD_SIZE; ++i)
@@ -178,7 +179,7 @@ static char
 find_winner (void)
 {
   char players[] = {'X', 'O'};
-  unsigned short i;
+  uint8_t i;
 
   for (i = 0; i < 2; ++i)
     if (is_winner (players[i]))
@@ -191,7 +192,7 @@ int
 main (void)
 {
   char turn = 'X', winner;
-  unsigned long num_turns = 0;
+  uint16_t num_turns = 0;
 
   board = malloc (sizeof (char[BOARD_SIZE][BOARD_SIZE]));
   if (NULL == board)
@@ -200,7 +201,7 @@ main (void)
       return 1;
     }
 
-  short i, j;
+  uint8_t i, j;
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       board[i][j] = ' ';
