@@ -26,16 +26,16 @@
 
 struct move
 {
-  unsigned int h;
-  unsigned int v;
+  unsigned short h;
+  unsigned short v;
 };
 
 char (*board)[BOARD_SIZE];
 
-static int
+static short
 get_bump (int s)
 {
-  int i = 1;
+  short i = 1;
 
   while (s > 10)
     {
@@ -49,7 +49,7 @@ get_bump (int s)
 static void
 draw_board (void)
 {
-  int i, j, bump = get_bump (BOARD_SIZE);
+  short i, j, bump = get_bump (BOARD_SIZE);
 
   printf ("\n\n\n ");
 
@@ -65,7 +65,7 @@ draw_board (void)
     {
       printf ("%d", i);
 
-      int b = bump - get_bump (i+1);
+      short b = bump - get_bump (i+1);
       for (j = 0; j < b; ++j)
 	putchar (' ');
 
@@ -85,7 +85,7 @@ get_move (char player)
   char v;
 
   printf ("%c's move: ", player);
-  scanf ("%c%u", &v, &m.h);
+  scanf ("%c%hu", &v, &m.h);
 
   while (getchar () != '\n')
     ;
@@ -98,7 +98,7 @@ get_move (char player)
 static bool
 is_winner (char player)
 {
-  int i, j;
+  short i, j;
 
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
@@ -141,11 +141,11 @@ is_winner (char player)
   return false;
 }
 
-static int
+static char
 find_winner (void)
 {
   char players[] = {'X', 'O'};
-  unsigned int i;
+  unsigned short i;
 
   for (i = 0; i < 2; ++i)
     if (is_winner (players[i]))
@@ -157,8 +157,8 @@ find_winner (void)
 int
 main (void)
 {
-  char turn = 'X';
-  int winner, i, j, num_turns = 0;
+  char turn = 'X', winner;
+  unsigned long long num_turns = 0;
 
   board = malloc (sizeof (char[BOARD_SIZE][BOARD_SIZE]));
   if (NULL == board)
@@ -167,6 +167,7 @@ main (void)
       return 1;
     }
 
+  short i, j;
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       board[i][j] = ' ';
