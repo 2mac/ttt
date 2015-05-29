@@ -224,15 +224,13 @@ main (void)
 	  continue;
 	}
 
-      if (' ' == board[m.v][m.h])
-	{
-	  board[m.v][m.h] = turn;
-	}
-      else
+      if (' ' != board[m.v][m.h])
 	{
 	  fputs ("That space is already taken!", stderr);
 	  continue;
 	}
+
+      board[m.v][m.h] = turn;
 
       turn = turn == 'X' ? 'O' : 'X';
       ++num_turns;
