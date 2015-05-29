@@ -108,16 +108,16 @@ static struct move
 get_move (char player)
 {
   struct move m;
-  char v;
+  char h;
 
   printf ("%c's move: ", player);
-  scanf ("%c%hhu", &v, &m.h);
+  scanf ("%c%hhu", &h, &m.v);
 
   // discard extra input to prevent cheating
   while (getchar () != '\n')
     ;
 
-  m.v = toupper (v) - 'A';
+  m.h = toupper (h) - 'A';
 
   return m;
 }
@@ -224,9 +224,9 @@ main (void)
 	  continue;
 	}
 
-      if (' ' == board[m.h][m.v])
+      if (' ' == board[m.v][m.h])
 	{
-	  board[m.h][m.v] = turn;
+	  board[m.v][m.h] = turn;
 	}
       else
 	{
