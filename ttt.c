@@ -109,6 +109,7 @@ get_move (char player)
 {
   struct move m;
   char h;
+  m.v = BOARD_SIZE; m.h = BOARD_SIZE;
 
   printf ("%c's move: ", player);
   scanf ("%c%hhu", &h, &m.v);
