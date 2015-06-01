@@ -107,8 +107,11 @@ draw_board (void)
 static struct move
 get_move (char player)
 {
-  struct move m;
   char h;
+  struct move m = {
+    .h = BOARD_SIZE,
+    .v = BOARD_SIZE
+  };
 
   printf ("%c's move: ", player);
   scanf ("%c%hhu", &h, &m.v);
