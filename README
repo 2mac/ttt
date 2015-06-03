@@ -30,13 +30,13 @@ that want a good sample to study and change.
 The C code complies with GNU and C standards, and it can be compiled and run on
 any compliant system. It makes use of several standard library features and
 showcases their uses. Since the code is documented using a standard format,
-readers can understand a functions purpose before reading it, thus better
+readers can understand a function's purpose before reading it, thus better
 understanding the code as a whole.
 
-I used GNU Make to automate compilation not because it is hard (I could easily
-have written the instructions in this README file) but as a "hello world" for
-Makefiles, since hackers will no doubt need build automation tools for their
-more significant software.
+I used GNU Make to automate compilation not because compiling is hard (I could
+easily have written the instructions in this README file) but as a "hello
+world" for Makefiles, since hackers will no doubt need build automation tools
+for their more significant software.
 
 Since the source is controlled using Git, I also provided a way for new hackers
 to practice using Git and learn the advantages to source control. It also
