@@ -82,7 +82,7 @@ draw_board (void)
   putchar ('\n');
 
   printf ("  +-+");
-  
+
   for (i = 0; i < BOARD_SIZE-1; ++i)
     printf ("-+");
 
@@ -101,7 +101,7 @@ draw_board (void)
 
       for (j = 0; j < BOARD_SIZE; ++j)
 	printf ("%c|", board[i][j]);
-      
+
       putchar ('\n');
 
       printf ("  +-+");
