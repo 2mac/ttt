@@ -81,6 +81,13 @@ draw_board (void)
 
   putchar ('\n');
 
+  printf ("  +-+");
+  
+  for (i = 0; i < BOARD_SIZE-1; ++i)
+    printf ("-+");
+
+  putchar ('\n');
+
   for (i = 0; i < BOARD_SIZE; ++i)
     {
       printf ("%d", i);
@@ -94,8 +101,15 @@ draw_board (void)
 
       for (j = 0; j < BOARD_SIZE; ++j)
 	printf ("%c|", board[i][j]);
-
+      
       putchar ('\n');
+
+      printf ("  +-+");
+
+      for (j = 0; j < BOARD_SIZE-1; ++j)
+	printf ("-+");
+
+     putchar ('\n');
     }
 }
 
