@@ -64,14 +64,19 @@ get_bump (uint8_t s)
 }
 
 /**
-*@brief Draws horizontal bar
-*/
+ * @brief Draws horizontal bar.
+ */
 static void
 draw_horiz_bar (void)
 {
-  printf ("   +-+");
+  uint8_t i;
 
-  for (int i = 0; i < BOARD_SIZE-1; ++i)
+  for (i = 0; i <= get_bump (BOARD_SIZE); ++i)
+    putchar (' ');
+  
+  putchar ('+');
+
+  for (i = 0; i < BOARD_SIZE; ++i)
     printf ("-+");
 
   putchar ('\n');
