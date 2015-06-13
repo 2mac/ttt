@@ -64,6 +64,25 @@ get_bump (uint8_t s)
 }
 
 /**
+ * @brief Draws horizontal bar.
+ */
+static void
+draw_horiz_bar (void)
+{
+  uint8_t i;
+
+  for (i = 0; i <= get_bump (BOARD_SIZE); ++i)
+    putchar (' ');
+  
+  putchar ('+');
+
+  for (i = 0; i < BOARD_SIZE; ++i)
+    printf ("---+");
+
+  putchar ('\n');
+}
+
+/**
  * @brief Draws the board on the screen with some white space above it.
  */
 static void
@@ -71,15 +90,17 @@ draw_board (void)
 {
   uint8_t i, j, bump = get_bump (BOARD_SIZE);
 
-  printf ("\n\n\n ");
+  printf ("\n\n\n");
 
   for (i = 0; i < bump; ++i)
     putchar (' ');
 
   for (i = 0; i < BOARD_SIZE; ++i)
-    printf (" %c", i + 'A');
+    printf ("   %c", i + 'A');
 
   putchar ('\n');
+  
+  draw_horiz_bar ();
 
   for (i = 0; i < BOARD_SIZE; ++i)
     {
@@ -93,9 +114,11 @@ draw_board (void)
       printf (" |");
 
       for (j = 0; j < BOARD_SIZE; ++j)
-	printf ("%c|", board[i][j]);
+	printf (" %c |", board[i][j]);
 
       putchar ('\n');
+
+      draw_horiz_bar ();
     }
 }
 
