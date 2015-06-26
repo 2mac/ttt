@@ -16,9 +16,7 @@
  */
 
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
 #include <stdint.h>
