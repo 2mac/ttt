@@ -149,7 +149,7 @@ get_move (char player)
 /**
  * @brief Checks if a player has won.
  * @param player The player for which to check win status.
- * @return true if the player has BOARD_SIZE in a row.
+ * @return true if the player's moves make a winning tic-tac-toe combination.
  */
 static bool
 is_winner (char player)
