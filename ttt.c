@@ -129,10 +129,11 @@ static struct move
 get_move (char player)
 {
   char h;
-  struct move m = {
-    .h = BOARD_SIZE,
-    .v = BOARD_SIZE
-  };
+  struct move m =
+    {
+      .h = BOARD_SIZE,
+      .v = BOARD_SIZE
+    };
 
   printf ("%c's move: ", player);
   scanf ("%c%hhu", &h, &m.v);
