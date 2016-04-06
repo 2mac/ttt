@@ -40,7 +40,7 @@ struct move
 /**
  * @brief Storage for the board state.
  */
-char (*board)[BOARD_SIZE];
+static char **board = NULL;
 
 /**
  * @brief Calculates the number of spaces by which to bump the board.
@@ -219,14 +219,49 @@ find_winner (void)
   return 0;
 }
 
+static void *
+alloc_board ()
+{
+  char **board = malloc (BOARD_SIZE * sizeof (char *));
+  if (!board)
+    return NULL;
+
+  size_t i;
+  for (i = 0; i < BOARD_SIZE; ++i)
+    {
+      board[i] = malloc (BOARD_SIZE * sizeof (char));
+      if (!board[i])
+	goto fail;
+    }
+
+  return board;
+
+ fail:
+  for (size_t j = 0; j < i; ++j)
+    free (board[j]);
+
+  free (board);
+
+  return NULL;
+}
+
+static void
+free_board ()
+{
+  for (size_t i = 0; i < BOARD_SIZE; ++i)
+    free (board[i]);
+
+  free (board);
+}
+
 int
 main (void)
 {
   char turn = 'X', winner;
   uint16_t num_turns = 0;
 
-  board = malloc (sizeof (char[BOARD_SIZE][BOARD_SIZE]));
-  if (NULL == board)
+  board = alloc_board ();
+  if (!board)
     {
       fputs ("Error allocating board", stderr);
       return 1;
@@ -262,7 +297,7 @@ main (void)
     }
 
   draw_board ();
-  free (board);
+  free_board ();
 
   if (!winner)
     puts ("No one wins. :(");
