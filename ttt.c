@@ -286,8 +286,9 @@ main (void)
       board[m.v][m.h] = turn;
 
       turn = turn == 'X' ? 'O' : 'X';
+      ++num_turns;
     }
-  while (!(winner = find_winner ()) && num_turns++ < BOARD_SIZE * BOARD_SIZE);
+  while (!(winner = find_winner ()) && num_turns < BOARD_SIZE * BOARD_SIZE);
 
   draw_board ();
   free_board ();
