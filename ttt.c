@@ -1,6 +1,6 @@
 /*
  *  ttt - Simple arbitrary-size tic-tac-toe game
- *  Copyright (C) 2015 David McMackins II
+ *  Copyright (C) 2015-2016 David McMackins II
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published by
@@ -15,11 +15,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <stdint.h>
+#include <string.h>
 
 #ifndef BOARD_SIZE
 /**
@@ -33,8 +33,8 @@
  */
 struct move
 {
-  uint8_t h; // horizontal position
-  uint8_t v; // vertical position
+  unsigned int h; // horizontal position
+  unsigned int v; // vertical position
 };
 
 /**
@@ -44,18 +44,18 @@ static char **board = NULL;
 
 /**
  * @brief Calculates the number of spaces by which to bump the board.
- * @param s The size of the board for which to bump.
+ * @param size The size of the board for which to bump.
  * @return The bump size for the given board.
  */
-static uint8_t
-get_bump (uint8_t s)
+static unsigned int
+get_bump (unsigned int size)
 {
-  uint8_t i = 1;
+  unsigned int i = 1;
 
-  while (s > 10)
+  while (size > 10)
     {
       ++i;
-      s /= 10;
+      size /= 10;
     }
 
   return i;
@@ -65,16 +65,14 @@ get_bump (uint8_t s)
  * @brief Draws horizontal bar.
  */
 static void
-draw_horiz_bar (void)
+draw_horiz_bar ()
 {
-  uint8_t i;
-
-  for (i = 0; i <= get_bump (BOARD_SIZE); ++i)
+  for (unsigned int i = 0; i <= get_bump (BOARD_SIZE); ++i)
     putchar (' ');
   
   putchar ('+');
 
-  for (i = 0; i < BOARD_SIZE; ++i)
+  for (unsigned int i = 0; i < BOARD_SIZE; ++i)
     printf ("---+");
 
   putchar ('\n');
@@ -84,35 +82,35 @@ draw_horiz_bar (void)
  * @brief Draws the board on the screen with some white space above it.
  */
 static void
-draw_board (void)
+draw_board ()
 {
-  uint8_t i, j, bump = get_bump (BOARD_SIZE);
+  unsigned int bump = get_bump (BOARD_SIZE);
 
   printf ("\n\n\n");
 
-  for (i = 0; i < bump; ++i)
+  for (unsigned int i = 0; i < bump; ++i)
     putchar (' ');
 
-  for (i = 0; i < BOARD_SIZE; ++i)
+  for (unsigned int i = 0; i < BOARD_SIZE; ++i)
     printf ("   %c", i + 'A');
 
   putchar ('\n');
   
   draw_horiz_bar ();
 
-  for (i = 0; i < BOARD_SIZE; ++i)
+  for (unsigned int i = 0; i < BOARD_SIZE; ++i)
     {
-      printf ("%d", i);
+      printf ("%u", i);
 
       // make sure board lines up on all rows
-      uint8_t b = bump - get_bump (i+1);
-      for (j = 0; j < b; ++j)
-	putchar (' ');
+      unsigned int b = bump - get_bump (i+1);
+      for (unsigned int j = 0; j < b; ++j)
+        putchar (' ');
 
       printf (" |");
 
-      for (j = 0; j < BOARD_SIZE; ++j)
-	printf (" %c |", board[i][j]);
+      for (unsigned int j = 0; j < BOARD_SIZE; ++j)
+        printf (" %c |", board[i][j]);
 
       putchar ('\n');
 
@@ -136,7 +134,7 @@ get_move (char player)
     };
 
   printf ("%c's move: ", player);
-  scanf ("%c%hhu", &h, &m.v);
+  scanf ("%c%u", &h, &m.v);
 
   // discard extra input to prevent cheating
   while (getchar () != '\n')
@@ -155,48 +153,48 @@ get_move (char player)
 static bool
 is_winner (char player)
 {
-  int16_t i, j;
+  unsigned int i, j;
 
   // check rows
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
-	if (board[i][j] != player)
-	  break;
+        if (board[i][j] != player)
+          break;
 
-	if ((BOARD_SIZE - 1) == j)
-	  return true;
+        if ((BOARD_SIZE - 1) == j)
+          return true;
       }
 
   // check columns
   for (i = 0; i < BOARD_SIZE; ++i)
     for (j = 0; j < BOARD_SIZE; ++j)
       {
-	if (board[j][i] != player)
-	  break;
+        if (board[j][i] != player)
+          break;
 
-	if ((BOARD_SIZE - 1) == j)
-	  return true;
+        if ((BOARD_SIZE - 1) == j)
+          return true;
       }
 
   // check diagonal from top-left to bottom-right
   for (i = 0, j = 0; i < BOARD_SIZE && j < BOARD_SIZE; ++i, ++j)
     {
       if (board[i][j] != player)
-	break;
+        break;
 
       if ((BOARD_SIZE - 1) == i)
-	return true;
+        return true;
     }
 
   // check diagonal from top-right to bottom-left
-  for (i = 0, j = BOARD_SIZE-1; i < BOARD_SIZE && j >= 0; ++i, --j)
+  for (i = 0, j = BOARD_SIZE - 1; i < BOARD_SIZE && j >= 0; ++i, --j)
     {
       if (board[i][j] != player)
-	break;
+        break;
 
       if (0 == j)
-	return true;
+        return true;
     }
 
   return false;
@@ -207,12 +205,11 @@ is_winner (char player)
  * @return The player who wins or 0 if no winner.
  */
 static char
-find_winner (void)
+find_winner ()
 {
-  char players[] = {'X', 'O'};
-  uint8_t i;
+  static const char players[] = { 'X', 'O' };
 
-  for (i = 0; i < 2; ++i)
+  for (unsigned int i = 0; i < 2; ++i)
     if (is_winner (players[i]))
       return players[i];
 
@@ -226,18 +223,20 @@ alloc_board ()
   if (!board)
     return NULL;
 
-  size_t i;
+  unsigned int i;
   for (i = 0; i < BOARD_SIZE; ++i)
     {
       board[i] = malloc (BOARD_SIZE * sizeof (char));
       if (!board[i])
-	goto fail;
+        goto fail;
+
+      memset (board[i], ' ', BOARD_SIZE);
     }
 
   return board;
 
  fail:
-  for (size_t j = 0; j < i; ++j)
+  for (unsigned int j = 0; j < i; ++j)
     free (board[j]);
 
   free (board);
@@ -248,7 +247,7 @@ alloc_board ()
 static void
 free_board ()
 {
-  for (size_t i = 0; i < BOARD_SIZE; ++i)
+  for (unsigned int i = 0; i < BOARD_SIZE; ++i)
     free (board[i]);
 
   free (board);
@@ -257,9 +256,6 @@ free_board ()
 int
 main (void)
 {
-  char turn = 'X', winner;
-  uint16_t num_turns = 0;
-
   board = alloc_board ();
   if (!board)
     {
@@ -267,34 +263,31 @@ main (void)
       return 1;
     }
 
-  uint8_t i, j;
-  for (i = 0; i < BOARD_SIZE; ++i)
-    for (j = 0; j < BOARD_SIZE; ++j)
-      board[i][j] = ' ';
-
-  while (!(winner = find_winner ()) && num_turns < BOARD_SIZE * BOARD_SIZE)
+  char turn = 'X', winner;
+  unsigned int num_turns = 0;
+  do
     {
       draw_board ();
 
       struct move m = get_move (turn);
 
       if (m.h >= BOARD_SIZE || m.v >= BOARD_SIZE)
-	{
-	  fputs ("That space is not on the board!", stderr);
-	  continue;
-	}
+        {
+          fputs ("That space is not on the board!", stderr);
+          continue;
+        }
 
       if (' ' != board[m.v][m.h])
-	{
-	  fputs ("That space is already taken!", stderr);
-	  continue;
-	}
+        {
+          fputs ("That space is already taken!", stderr);
+          continue;
+        }
 
       board[m.v][m.h] = turn;
 
       turn = turn == 'X' ? 'O' : 'X';
-      ++num_turns;
     }
+  while (!(winner = find_winner ()) && num_turns++ < BOARD_SIZE * BOARD_SIZE);
 
   draw_board ();
   free_board ();
