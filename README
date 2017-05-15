@@ -74,22 +74,12 @@ The board is labeled with coordinates of letters and numbers. When placing a
 move, write the letter and then the number. For example, to put your mark in
 the very first cell, type `a0` as your position.
 
-Custom Boards
--------------
-
-To change the size of the game board, you must define `BOARD_SIZE` at compile
-time. When compiling, add `-DBOARD_SIZE=X` to the `CFLAGS` where `X` is the
-desired size. For example, to set the board size to 6, run
-
-    $ make CFLAGS=-DBOARD_SIZE=6
-
 Hacking
 -------
 
-ttt uses the GNU coding style for C with a strict 79-column limit in the source
-code. All functions and fields outside of `main()` should be documented using
-Doxygen comment formatting, and all variable symbolic constants should be
-optionally definable using the `CFLAGS` field in the Makefile.
+Match the style you see in the source code. Do not use spaces for
+indentation. All functions and fields outside of `main()` should be documented
+using Doxygen comment formatting.
 
 Avoid depending on external libraries with your changes. You will need to
 discuss with me (David McMackins II) if you want new dependencies to be added

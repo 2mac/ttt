@@ -1,15 +1,15 @@
-EXEC=ttt
-EXECCFLAGS=-Wall -std=c11
-SOURCES=ttt.c
-prefix=/usr/local
+CC=c99
+CFLAGS=-Wall -Wextra -Wunreachable-code -ftrapv -fPIC -D_POSIX_C_SOURCE=2
+PREFIX=/usr/local
 
 all: ttt
 
-ttt:
-	$(CC) $(EXECCFLAGS) $(CFLAGS) -o $(EXEC) $(SOURCES)
+ttt_deps=ttt.o
+ttt: $(ttt_deps)
+	$(CC) -o $@ $(ttt_deps)
 
 install: ttt
-	install -m755 $(EXEC) $(DESTDIR)$(prefix)/bin/$(EXEC)
+	install -m755 $(EXEC) $(DESTDIR)$(PREFIX)/bin/$(EXEC)
 
 clean:
-	rm -f ttt
+	rm -f *.o ttt
