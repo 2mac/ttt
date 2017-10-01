@@ -145,6 +145,7 @@ get_bump(unsigned int size)
 
 /**
  * @brief Draws horizontal bar.
+ * @param num_cells Number of cells per row.
  */
 static void
 draw_horiz_bar(unsigned int num_cells)
@@ -162,6 +163,7 @@ draw_horiz_bar(unsigned int num_cells)
 
 /**
  * @brief Draws the board on the screen with some white space above it.
+ * @param board Reference to the game board.
  */
 static void
 draw_board(const struct board *board)
@@ -203,8 +205,9 @@ draw_board(const struct board *board)
 
 /**
  * @brief Gets a player's desired move.
+ * @param m Target move structure to store the result in.
  * @param player The player for which to obtain the move.
- * @return Move data based on player input.
+ * @param board_size Size of the game board.
  */
 static void
 get_move(struct move *m, char player, unsigned int board_size)
@@ -225,6 +228,7 @@ get_move(struct move *m, char player, unsigned int board_size)
 
 /**
  * @brief Checks if a player has won.
+ * @param board Reference to the game board.
  * @param player The player for which to check win status.
  * @return true if the player's moves make a winning tic-tac-toe combination.
  */
@@ -280,6 +284,7 @@ is_winner(const struct board *board, char player)
 
 /**
  * @brief Checks if the board is in a winning state.
+ * @param board Reference to the game board.
  * @return The player who wins or 0 if no winner.
  */
 static char
