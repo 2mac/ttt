@@ -27,32 +27,28 @@ Usefulness
 This program makes for an advanced "hello world" program for aspiring hackers
 that want a good sample to study and change.
 
-The C code complies with GNU and C standards, and it can be compiled and run on
-any compliant system. It makes use of several standard library features and
+The C code complies with C standards, and it can be compiled and run on any
+compliant system. It makes use of several standard library features and
 showcases their uses. Since the code is documented using a standard format,
 readers can understand a function's purpose before reading it, thus better
 understanding the code as a whole.
 
-I used GNU Make to automate compilation not because compiling is hard (I could
+I used `make` to automate compilation not because compiling is hard (I could
 easily have written the instructions in this README file) but as a "hello
 world" for Makefiles, since hackers will no doubt need build automation tools
 for their more significant software.
 
 Since the source is controlled using Git, I also provided a way for new hackers
-to practice using Git and learn the advantages to source control. It also
+to practice using Git and learn the advantages of source control. It also
 allows them to easily submit their changes and improvements to me to benefit
 future hackers.
-
-Lastly, I included a license file which describes the core ideals of free
-(libre) software, which I find to be very important for both new and
-experienced computer users everywhere.
 
 To Build
 --------
 
 You will need a standards-compliant C compiler, the standard C library with
-header files, and GNU Make. On Debian GNU/Linux and derivatives, you can
-install these with
+header files, and `make`. On Debian GNU/Linux and derivatives, you can install
+these with
 
     # apt-get install build-essential
 
